@@ -20,6 +20,11 @@ public class PersonController {
     private Response<Person> findByName(String name){
         return Response.success(personService.findByName(name));
     }
+    @GetMapping("/pageByName")
+    @ApiOperation("根据名字查找")
+    private Response<Person> pageByName(int page,int size,String name){
+        return Response.success(personService.page(page,size,name));
+    }
 
     @PostMapping("/addPersonNodes")
     @ApiOperation("添加导演节点")
