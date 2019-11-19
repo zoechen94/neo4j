@@ -1,15 +1,15 @@
 package movies.spring.data.neo4j.controller;
 
-import java.util.Collection;
-import java.util.Map;
-
 import movies.spring.data.neo4j.domain.Movie;
 import movies.spring.data.neo4j.services.MovieService;
-import org.springframework.beans.factory.annotation.Autowired;
+import movies.spring.data.neo4j.utils.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Mark Angrish
@@ -26,7 +26,17 @@ public class MovieController {
 	}
 
     @GetMapping("/graph")
-	public Map<String, Object> graph(@RequestParam(value = "limit",required = false) Integer limit) {
-		return movieService.graph(limit == null ? 100 : limit);
+	public Response<Collection<Movie>> graph(@RequestParam(value = "limit",required = false) Integer limit) {
+		return Response.success(movieService.graph(limit == null ? 100 : limit));
+	}
+
+	@GetMapping("/getAll")
+	public Response<List<Movie>> getMovies(){
+		return Response.success(movieService.getMovies());
+	}
+
+	@GetMapping("add")
+	public Response<Movie> addMovie(String name){
+		return Response.success(movieService.addMovie(name));
 	}
 }

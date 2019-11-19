@@ -1,65 +1,40 @@
 package movies.spring.data.neo4j.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.neo4j.ogm.annotation.Property;
 
 /**
  * @author Mark Angrish
  */
-@NodeEntity
+@NodeEntity(label = "电影")
 public class Movie {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String title;
-	private int released;
-	private String tagline;
+	@Property
+	private String name;
 
-	@JsonIgnoreProperties("movie")
-	@Relationship(type = "ACTED_IN", direction = Relationship.INCOMING)
-	private List<Role> roles;
-
-	public Movie() {
+	public Movie(String name){
+		this.name=name;
 	}
-
-	public Movie(String title, int released, String tagline) {
-		this.title = title;
-		this.released = released;
-		this.tagline = tagline;
-	}
+    public Movie(){}
 
 	public Long getId() {
 		return id;
 	}
 
-	public String getTitle() {
-		return title;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public int getReleased() {
-		return released;
+	public String getName() {
+		return name;
 	}
 
-	public String getTagline() {
-		return tagline;
-	}
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void addRole(Role role) {
-		if (this.roles == null) {
-			this.roles = new ArrayList<>();
-		}
-		this.roles.add(role);
+	public void setName(String name) {
+		this.name = name;
 	}
 }
